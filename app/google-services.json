@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "654438354258",
+    "firebase_url": "https://geoapp-5eed6.firebaseio.com",
+    "project_id": "geoapp-5eed6",
+    "storage_bucket": "geoapp-5eed6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:654438354258:android:15b6584cb23fae46",
+        "android_client_info": {
+          "package_name": "com.oryx.geoop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "654438354258-2um0057pd96c0e49tv3f80n7m92tc64i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQU90u8Iqp5MyUzIPcf2ZxGMvMnmGI1WI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "654438354258-2um0057pd96c0e49tv3f80n7m92tc64i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
