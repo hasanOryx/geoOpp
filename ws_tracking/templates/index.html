@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Test</title>
+</head>
+<body>
+<h1>Rocket Form Kitchen Sink</h1>
+
+<form id="myForm" method="post" action = "/submit_task" accept-charset="utf-8">
+  <label>Checkbox:
+    <input type="checkbox" name="checkbox" value="on">
+  </label><br /><br />
+
+  <label>Number:
+    <input name="number" type="number" value="123" />
+  </label><br /><br />
+
+  <label>Password:
+    <input name="password" type="password" />
+  </label>
+  <br /><br />
+
+  <label for="type">Type:
+    <label for="a">A
+      <input type="radio" name="type" id="a" value="a" />
+    </label>
+    <label for="b">B
+      <input type="radio" name="type" id="b" value="b" checked />
+    </label>
+    <label for="c">C
+      <input type="radio" name="type" id="c" value="c" />
+    </label>
+  </label>
+  <br /><br />
+
+  <label>Textarea:
+    <textarea name="textarea" rows="10" cols="50">Write something here.</textarea>
+  </label>
+  <br /><br />
+
+  <label>Select:
+    <select name="select">
+      <option value="a">Value A</option>
+      <option value="b" selected>Value B</option>
+      <option value="c">Value C</option>
+    </select>
+  </label>
+  <br /><br />
+</form>
+  <label>Submit:
+    <input type="submit" value="Login">
+    '<button id="submit" onclick="submit(document.forms['myForm'])">Submit</button>'
+  </label>
+  <br /><br />
+
+  <script>
+    function submit(form){
+      form.submit();
+  /*    const formData = new FormData(form);
+      console.log(formData);
+      fetch('http://127.0.0.1:8081/sink', {
+        method: 'post',
+        body: formData,
+        credentials: 'no-cors',
+    }).then(function(response){
+      return response.text;
+    }).then(function(text){
+      console.log("returned text: "+ text);
+    }).catch(function(error){
+      console.log("returned error: "+ error);
+    }) */
+}
+  </script>
+
+</body>
+</html>

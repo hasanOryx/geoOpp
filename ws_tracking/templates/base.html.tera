@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>My App</title>
+    {% include "resources/openlayers" %}
+    {% include "resources/style" %}
+
+</head>
+<body oncontextmenu="return false;">
+  <div class='ui container'>
+  {% block content %}{% endblock content %}
+  </div>
+
+<section>
+<div id="one">
+  <form id="search-truck" style="margin: 0px 0px 10px 0px;"><input type="text"></form>
+  <ul class="menubar" id="menuList"></ul>
+</div>
+  <div id="map"></div>
+  <div id="popup" title="myproject" class="ol-popup"><a href="#" id="popup-closer" class="ol-popup-closer"></a>
+  <div id="popup-content">
+
+  </div>
+  </div>
+</section>
+  <pre id="messages"></pre>
+<form id="form">
+ <input type="text" id="msg">
+ <input type="submit" value="Send">
+</form>
+
+  {% include "resources/openlayers" %}
+  {% include "resources/map" %}
+  {% include "resources/socket" %}
+  {% include "resources/script" %}
+</body>
+</html>

@@ -1,0 +1,6 @@
+{% extends "base" %}
+{% block content %}
+
+    <p>Welcome to the mobiles tracking app</p>
+    
+{% endblock content %}
