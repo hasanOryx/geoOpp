@@ -1,0 +1,87 @@
+<script>
+var content = document.getElementById('popup-content');
+var center = ol.proj.transform([44.6753, 25.7136], 'EPSG:4326', 'EPSG:3857'); 
+            //  ol.proj.fromLonLat([44.6753, 25.7136])
+var view = new ol.View({
+        center: center,  
+        zoom: 6   
+});  
+
+//raster layer on map
+var OSMBaseLayer = new ol.layer.Tile({
+    source: new ol.source.OSM()
+});
+
+straitSource = new ol.source.Vector({ wrapX: true });
+
+var clusterLayer = new ol.layer.Vector({
+  source: new ol.source.Cluster({
+    source: straitSource,
+    distance: 40
+  })
+});
+
+map = new ol.Map({
+    layers: [OSMBaseLayer, clusterLayer],
+    target: 'map',
+    view: view,
+    controls: [new ol.control.FullScreen(), new ol.control.Zoom()]
+});
+
+var container = document.getElementById('popup');
+var popup = new ol.Overlay({
+    element: container,
+    autoPan: true,
+    autoPanAnimation: {
+        duration: 1000
+    }
+});
+
+/* Add a pointermove handler to the map to render the popup.*/
+map.on('click', function (evt) {    // 'pointermove'
+      var cluster = map.forEachFeatureAtPixel(evt.pixel, function (feat) {
+        return feat;
+      },{
+        // restrict to the cluster layer
+        layerFilter: function(layer) {
+          return (layer === clusterLayer);
+        }
+      });
+
+      if (cluster && map.getView().getZoom() > 13) {
+          map.addOverlay(popup);
+          var coordinate = evt.coordinate;    //default projection is EPSG:3857 you may want to use ol.proj.transform
+          // list all the features in the cluster
+          content.innerHTML = '';
+          cluster.get('features').forEach(function(feature) {
+            content.innerHTML += (feature.get('desc') + '<br>');
+          });
+          popup.setPosition(coordinate);
+      } else {
+          popup.setPosition(undefined);      
+      }
+});
+
+const list = document.querySelector('#menuList');
+
+const searchBar = document.forms['search-truck'].querySelector('input');
+searchBar.addEventListener('keyup', function(e){
+  const trucks = Array.from(list.getElementsByTagName('li'));
+  const term = e.target.value.toLowerCase();
+  trucks.forEach(function(truck){
+    const title = truck.textContent.toLowerCase();
+    if(title.includes(term)){ 
+      truck.style.display = 'inline-block';
+    }
+    else { 
+      truck.style.display = 'none';
+    } 
+  })
+})
+
+function arrayRemove(arr, value) {
+   return arr.filter(function(ele){
+       return ele != value;
+   });
+}
+</script>

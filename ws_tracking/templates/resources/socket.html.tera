@@ -1,0 +1,152 @@
+<script>
+    var socket = new WebSocket("ws://127.0.0.1:8080/ws");
+    console.log(window.location.host)
+    var menuList = document.querySelector('#menuList');
+
+    var devices = [];  // new Array();
+    var markers = {};  // new Object();
+
+    socket.onopen = function (event) {}
+    socket.onoclose = function (event) {}
+    socket.onerror = function (error) {
+    console.log('Error ${error.message}')
+    }
+    socket.onmessage = function (event) {
+        console.log(event.data)
+        var messages = document.getElementById("messages");
+        messages.innerHTML += event.data;
+        var obj = JSON.parse(event.data);
+        var device = obj.unique_id;
+        var data=[{"Lon":19.455128,"Lat":41.310575}];
+        var li = document.createElement('li');
+        li.appendChild(document.createTextNode(obj.unique_id));
+        li.id = obj.unique_id;
+
+        const trucks = Array.from(list.getElementsByTagName('li'));
+
+        let found = trucks.findIndex((e) => e.id == obj.unique_id);
+        if (found === -1) {
+            li.setAttribute("lon", obj.lon);
+            li.setAttribute("lat", obj.lat);
+            menuList.appendChild(li);
+        } else {
+            const index = trucks.findIndex((e) => e.id === li.id);
+            trucks[index].setAttribute("lon", obj.lon);
+            trucks[index].setAttribute("lat", obj.lat);
+        }
+
+        menuList.addEventListener("click", function(e) {
+            if (e.target && e.target.matches("li")) {
+               var lon = Number(e.target.getAttribute('lon'));
+               var lat = Number(e.target.getAttribute('lat'));
+               view.animate({center: new ol.proj.fromLonLat([lon, lat])}, {zoom: 15.1});
+            }
+        });
+if(obj.free_op) {console.log('obj.free_op 1: '+obj.free_op)}
+else {console.log('obj.free_op 2: '+obj.free_op)}
+
+var stdStyle = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.5, 0.5],   // Default value is the icon center.
+        scale: 0.3,          // resize imge
+        crossOrigin: 'anonymous',
+        src: 'http://127.0.0.1:8081/static/img/man_human-128.png'
+    })
+});
+
+var freeStyle = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.5, 0.5],   // Default value is the icon center.
+        scale: 0.3,          // resize imge
+        color: '#49fc82',    // green
+        crossOrigin: 'anonymous',
+        src: 'http://127.0.0.1:8081/static/img/man_human-128.png'
+    })
+});
+
+var busyStyle = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.5, 0.5],   // Default value is the icon center.
+        scale: 0.3,
+        color: '#ff704d',     // busy
+        crossOrigin: 'anonymous',
+        src: 'http://127.0.0.1:8081/static/img/man_human-128.png'
+    })
+});
+
+var styleCache = {};
+
+clusterLayer.setStyle(function(feature) {
+    var features = feature.get('features');
+    var size = features.length;
+    if (size == 1 && map.getView().getZoom() > 13) {  // size == 1 && resolution < map.getView.getResolutionForZoom(6)
+         console.log(feature[0]);
+         if (features[0].get('free_op')) { return freeStyle; }  
+            else { return busyStyle; }    
+    } else {
+          var style = styleCache[size];
+          if (!style) {
+            style = new ol.style.Style({
+              image: new ol.style.Circle({
+                radius: 10,
+                stroke: new ol.style.Stroke({
+                  color: '#fff'
+                }),
+                fill: new ol.style.Fill({
+                  color: '#3399CC'
+                })
+              }),
+              text: new ol.style.Text({
+                text: size.toString(),
+                fill: new ol.style.Fill({
+                  color: '#fff'
+                })
+              })
+            });
+            styleCache[size] = style;
+          }
+          return style;
+    }
+});
+var desc = `Person/Vehicle: <h5>` + obj.unique_id + `<h5>
+          <form id="task_form" action="/" method="post" accept-charset="utf-8">
+          <input type="hidden" name="status" value='New'>
+          <input type="hidden" name="command" value='Task'>
+          <input type="hidden" name="truck_id" value=` + obj.unique_id + `>
+          Task: <input type="text" name="task"><br>
+          Details: <textarea name="details" rows="4" cols="50"></textarea><br>
+          Customer Name: <input type="text" name="customer"><br>
+          Mobile: <input type="number" name="mobile"><br>
+          Address: <br>
+          <input type="number" name="lon" placeholder="longitude">
+          <input type="number" name="lat" placeholder="latitude"><br>
+          <textarea name="address" placeholder="Address details/notes" rows="4" cols="50"></textarea><br>
+          Schedule: <input type="date" name="datePicker" value= "2019-01-01"
+          min="2019-01-01" max="2020-12-31">
+          <input type="time" name="timePicker" value="00:00"><br><br><br>
+          </form>
+          <button onclick="handleFormSubmit(document.forms['task_form'], '/')">Login</button>`
+           
+        var iconFeature = new ol.Feature({
+            geometry: new ol.geom.Point(ol.proj.transform([obj.lon, obj.lat], 'EPSG:4326', 'EPSG:3857')),
+            type: 'Point',
+            desc:  desc,
+            free_op: obj.free_op
+        });
+      //  iconFeature.setStyle(iconStyle);
+       // iconFeature.setStyle( obj.free_op ? freeStyle : busyStyle)
+        iconFeature.setStyle(stdStyle);
+
+        if(!devices.includes(device)) {
+            devices.push(device);
+        var coordinates = [obj.lon, obj.lat];
+            markers[device]= iconFeature;
+            straitSource.addFeature(iconFeature);
+        } else {
+           // devices = devices.filter(function(value, index, arr){ return value != device; });
+            straitSource.removeFeature(markers[device]);
+            straitSource.addFeature(iconFeature);
+            markers[device]= iconFeature;
+        }   
+    };
+</script>
