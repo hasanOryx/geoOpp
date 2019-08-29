@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">GeoOp</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="task_status">Task Status</string>
+    <string-array name="status_array">
+        <item>New</item>
+        <item>On the way</item>
+        <item>Started</item>
+        <item>On Hold</item>
+        <item>Stuck</item>
+        <item>Cancelled</item>
+        <item>Completed</item>
+    </string-array>
+</resources>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:card_view="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="8dp">
+
+    <Spinner
+            android:prompt="@string/task_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/status"
+            android:spinnerMode="dropdown"/>
+
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="171dp"
+            android:inputType="textMultiLine"
+            android:gravity="start|top"
+            android:ems="10"
+            android:id="@+id/statusNote"/>
+
+    <RelativeLayout android:orientation="horizontal"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+        <Button
+                android:text="Update notes"
+                android:layout_width="350px"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true" android:layout_marginEnd="-9dp"
+                android:id="@+id/button"/>
+
+        <Button
+                android:text="Set Alarm"
+                android:layout_width="350px"
+                android:layout_height="wrap_content"
+                android:id="@+id/alarmBtn" android:layout_alignParentEnd="true" android:layout_marginEnd="-9dp"/>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout android:orientation="horizontal"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" card_view:srcCompat="@android:drawable/sym_action_call"
+                android:layout_alignParentStart="true" android:layout_marginEnd="-9dp"
+                android:id="@+id/dialBtn"/>
+
+        <ImageButton
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" card_view:srcCompat="@android:drawable/ic_menu_mylocation"
+                android:id="@+id/locationBtn"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" card_view:srcCompat="@android:drawable/ic_menu_send"
+                android:id="@+id/whasappBtn" android:layout_alignParentEnd="true" android:layout_marginEnd="-9dp"/>
+
+    </RelativeLayout>
+
+    <TextView
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:text="Occupation"
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="244dp"/>
+    <Button
+            android:text="Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/gwhatsapp"/>
+
+
+</LinearLayout>
